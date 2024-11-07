@@ -29,10 +29,13 @@ class TestShoppingCart:
     def test_1_should_add_item_to_cart(self, web: WebDriver):
         products_to_add_to_cart = web.find_elements(By.CSS_SELECTOR, '[data-test^="add-to-cart"]')
         assert len(products_to_add_to_cart) > 0
+    
         #agregamos la cantidad de productos en una variable
         cart_products_list = len(products_to_add_to_cart)
+        
         #con un for, agregamos cada producto al carrito
         for product in products_to_add_to_cart:
+            
             product.click() # Agregar un producto al carrito
     
         # Encontrar el elemento que contiene el número en el ícono del carrito
@@ -51,17 +54,9 @@ class TestShoppingCart:
         )
     
         products_in_cart = web.find_elements(By.CSS_SELECTOR, '[data-test^="remove"]')
+        
         #verificamos que la cantidad de productos en el carrito es igual a la cantidad de productos agregados
         assert len(products_in_cart) == cart_products_list
-
-#ahora presentare el codigo de un videojuego el cual pide un numero por pantalla y te dice si haz adivinado el numero que se genera de manera aleatoria y se almacena dentro de una variable que luego se compara.
-#importamos random para generar un numero aleatorio
-import random
-
-#funcion que genera un numero aleatorio entre 1 y 100
-def generate_random_number():
-        return random.randint(1, 100)
-    
-    #funcion que pide un numero al usuario y compara con el numero generado aleatoriamente
-    def play_game():
-        user_number = int(input("Adivina un número entre 1 y 100: ")
+        
+if __name__ == "__main__":
+    pytest.main()

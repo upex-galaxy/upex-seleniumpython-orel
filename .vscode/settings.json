@@ -1,11 +1,9 @@
 {
-    "python.testing.pytestArgs": [
-        "."
-    ],
+    "editor.defaultFormatter": "ms-python.autopep8",
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "cSpell.words": [
-        "Esperar"
+    "python.testing.pytestArgs": [
+        "--color=yes",
+        "tests"
     ],
-    "cSpell.language": "es"
 }
