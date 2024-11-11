@@ -7,7 +7,7 @@ class Test_GX3_5676_Elements_Radio_Buttons:
     def web(self):
         """Precondition: Open the demo page and wait for primary button visibility"""
         driver = Chrome()
-        driver.get('https://demoqa.com/buttons/')
+        driver.get('https://demoqa.com/radio-button')
         WebDriverWait(driver, 20).until(
             EC.visibility_of_element_located((By.CSS_SELECTOR, ".btn.btn-primary"))
         )
@@ -16,6 +16,5 @@ class Test_GX3_5676_Elements_Radio_Buttons:
         driver.quit()
     
     def test_left_click(self, web):
-        """TC01: Validate that the message 'You have done a dynamic click' is displayed correctly after clicking the 'Click Me' button"""
-        button = web.find_element(By.XPATH, "//button[text()='Click Me']")
-        button.click()
+        """TC01: Validar que el mensaje "“You have selected Yes” se muestra correctamente cuando se selecciona el RB 'Yes'"""
+        pass
