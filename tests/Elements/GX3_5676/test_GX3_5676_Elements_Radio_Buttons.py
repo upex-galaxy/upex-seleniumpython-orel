@@ -17,4 +17,5 @@ class Test_GX3_5676_Elements_Radio_Buttons:
     
     def test_left_click(self, web):
         """TC01: Validate that the message 'You have done a dynamic click' is displayed correctly after clicking the 'Click Me' button"""
- 
+        button = web.find_element(By.XPATH, "//button[text()='Click Me']")
+        button.click()
