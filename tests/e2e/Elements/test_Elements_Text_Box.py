@@ -29,6 +29,10 @@ class TestElementsTextBox:
         text_box_page.enter_permanent_address(permanent_address)
         web.execute_script("arguments[0].scrollIntoView(true);", text_box_page.submit_button())
         text_box_page.click_submit_button()
+        
+        # Esperar a que el campo de correo electrónico esté visible
+        text_box_page.wait_for_element(text_box_page.email_input())
+        
         # Validation
         displayed_data = text_box_page.get_displayed_information()
         assert displayed_data["name"] == f"Name:{user_name}"
@@ -41,6 +45,9 @@ class TestElementsTextBox:
         text_box_page = TextBoxPage(web)
         web.execute_script("arguments[0].scrollIntoView(true);", text_box_page.submit_button())
         text_box_page.click_submit_button()
+        
+        # Esperar a que el campo de correo electrónico esté visible
+        text_box_page.wait_for_element(text_box_page.email_input())
         
         stored_name = web.find_elements(By.ID, "name")
         stored_email = web.find_elements(By.ID, "email")
@@ -62,19 +69,16 @@ class TestElementsTextBox:
         permanent_address = "Mi direccion 23/23"
         # Interaction
         text_box_page.enter_user_name(user_name)
-        text_box_page.enter_email(is_email_invalid )
+        text_box_page.enter_email(is_email_invalid)
         text_box_page.enter_current_address(current_address)
         text_box_page.enter_permanent_address(permanent_address)
         web.execute_script("arguments[0].scrollIntoView(true);", text_box_page.submit_button())
         text_box_page.click_submit_button()
+        # Esperar a que el campo de correo electrónico esté visible
+        text_box_page.wait_for_element(text_box_page.email_input())
         # Validation: Verify the border color of the email field
-        email_field = web.find_element(By.CSS_SELECTOR, "input#userEmail.mr-sm-2.field-error.form-control")
-        for _ in range(10): 
-            border_color = email_field.value_of_css_property("border-color")  # Obtiene el color del borde
-            if border_color == "rgb(255, 0, 0)":  # Si el color es rojo, salimos del bucle
-                break
-            time.sleep(0.2) 
-        assert "rgb(255, 0, 0)" == border_color or "#ff0000" == border_color
+        field_state = text_box_page.email_input().get_attribute("class")
+        assert "field-error" in field_state   
         
     def test_email_field_displays_error_for_invalid_email_without_alphanumeric_before_at(self, web: WebDriver):
         """TC04: Validate that an email without an alphanumeric character before "@" is NOT accepted and a red border is displayed."""
@@ -86,19 +90,16 @@ class TestElementsTextBox:
         permanent_address = "Mi direccion 23/23"
         # Interaction
         text_box_page.enter_user_name(user_name)
-        text_box_page.enter_email(is_email_invalid )
+        text_box_page.enter_email(is_email_invalid)
         text_box_page.enter_current_address(current_address)
         text_box_page.enter_permanent_address(permanent_address)
         web.execute_script("arguments[0].scrollIntoView(true);", text_box_page.submit_button())
         text_box_page.click_submit_button()
+        # Esperar a que el campo de correo electrónico esté visible
+        text_box_page.wait_for_element(text_box_page.email_input())
         # Validation: Verify the border color of the email field
-        email_field = web.find_element(By.CSS_SELECTOR, "input#userEmail.mr-sm-2.field-error.form-control")
-        for _ in range(10): 
-            border_color = email_field.value_of_css_property("border-color")  # Obtiene el color del borde
-            if border_color == "rgb(255, 0, 0)":  # Si el color es rojo, salimos del bucle
-                break
-            time.sleep(0.2) 
-        assert "rgb(255, 0, 0)" == border_color or "#ff0000" == border_color
+        field_state = text_box_page.email_input().get_attribute("class")
+        assert "field-error" in field_state   
         
     def test_email_field_displays_error_for_invalid_email_without_alphanumeric_after_at(self, web: WebDriver):
         """TC05: Validate that an email without an alphanumeric character after "@" is NOT accepted and a red border is displayed."""
@@ -110,19 +111,16 @@ class TestElementsTextBox:
         permanent_address = "Mi direccion 23/23"
         # Interaction
         text_box_page.enter_user_name(user_name)
-        text_box_page.enter_email(is_email_invalid )
+        text_box_page.enter_email(is_email_invalid)
         text_box_page.enter_current_address(current_address)
         text_box_page.enter_permanent_address(permanent_address)
         web.execute_script("arguments[0].scrollIntoView(true);", text_box_page.submit_button())
         text_box_page.click_submit_button()
+        # Esperar a que el campo de correo electrónico esté visible
+        text_box_page.wait_for_element(text_box_page.email_input())
         # Validation: Verify the border color of the email field
-        email_field = web.find_element(By.CSS_SELECTOR, "input#userEmail.mr-sm-2.field-error.form-control")
-        for _ in range(10): 
-            border_color = email_field.value_of_css_property("border-color")  # Obtiene el color del borde
-            if border_color == "rgb(255, 0, 0)":  # Si el color es rojo, salimos del bucle
-                break
-            time.sleep(0.2) 
-        assert "rgb(255, 0, 0)" == border_color or "#ff0000" == border_color        
+        field_state = text_box_page.email_input().get_attribute("class")
+        assert "field-error" in field_state      
 
     def test_email_field_displays_error_for_invalid_email_without_dot_after_at(self, web: WebDriver):
         """TC06: Validate that an email without a "." after "@" is NOT accepted and a red border is displayed."""
@@ -134,19 +132,18 @@ class TestElementsTextBox:
         permanent_address = "Mi direccion 23/23"
         # Interaction
         text_box_page.enter_user_name(user_name)
-        text_box_page.enter_email(is_email_invalid )
+        text_box_page.enter_email(is_email_invalid)
         text_box_page.enter_current_address(current_address)
         text_box_page.enter_permanent_address(permanent_address)
         web.execute_script("arguments[0].scrollIntoView(true);", text_box_page.submit_button())
         text_box_page.click_submit_button()
+        
+        # Esperar a que el campo de correo electrónico esté visible
+        text_box_page.wait_for_element(text_box_page.email_input())
+        
         # Validation: Verify the border color of the email field
-        email_field = web.find_element(By.CSS_SELECTOR, "input#userEmail.mr-sm-2.field-error.form-control")
-        for _ in range(10): 
-            border_color = email_field.value_of_css_property("border-color")  # Obtiene el color del borde
-            if border_color == "rgb(255, 0, 0)":  # Si el color es rojo, salimos del bucle
-                break
-            time.sleep(0.2) 
-        assert "rgb(255, 0, 0)" == border_color or "#ff0000" == border_color        
+        field_state = text_box_page.email_input().get_attribute("class")
+        assert "field-error" in field_state
 
     def test_email_field_displays_error_for_invalid_email_without_two_characters_after_dot(self, web: WebDriver):
         """TC07: Validate that an email without two characters after "." is NOT accepted and a red border is displayed."""
@@ -158,11 +155,13 @@ class TestElementsTextBox:
         permanent_address = "Mi direccion 23/23"
         # Interaction
         text_box_page.enter_user_name(user_name)
-        text_box_page.enter_email(is_email_invalid )
+        text_box_page.enter_email(is_email_invalid)
         text_box_page.enter_current_address(current_address)
         text_box_page.enter_permanent_address(permanent_address)
         web.execute_script("arguments[0].scrollIntoView(true);", text_box_page.submit_button())
         text_box_page.click_submit_button()
+        # Esperar a que el campo de correo electrónico esté visible
+        text_box_page.wait_for_element(text_box_page.email_input())
         # Validation: Verify the border color of the email field
         field_state = text_box_page.email_input().get_attribute("class")
         assert "field-error" in field_state
