@@ -1,6 +1,6 @@
 from tests.e2e.utils.imports import *
 
-
+# Story GX3-5700
 class TestElementsTextBox:
 
     @pytest.fixture
