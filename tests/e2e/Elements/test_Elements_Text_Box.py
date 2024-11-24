@@ -1,7 +1,8 @@
 from tests.e2e.utils.imports import *
+from tests.e2e.pages.textbox_page import TextBoxPage
 
 # Story GX3-5700
-class TestElementsTextBox:
+class Test_Elements_Text_Box:
 
     @pytest.fixture
     def web(self):
