@@ -1,4 +1,4 @@
-from utils.imports import *
+from tests.e2e.utils.imports import *
 
 # Story GX3-5656
 class Test_Elements_Button:

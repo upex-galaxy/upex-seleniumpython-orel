@@ -3,7 +3,14 @@
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "python.testing.pytestArgs": [
-        "--color=yes",
         "tests"
     ],
+
+
+    "python.defaultInterpreterPath": "/miniconda3/envs/picadita-selelium-python/python.exe",
+    "python.terminal.activateEnvironment": true,
+    "terminal.integrated.env.linux": {
+        "CONDA_DEFAULT_ENV": "picadita-selelium-python"
+    },
+
 }
