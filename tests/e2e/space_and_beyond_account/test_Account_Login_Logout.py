@@ -1,7 +1,7 @@
 from tests.e2e.utils.imports import *
 from dotenv import load_dotenv
 import os
-from tests.e2e.pages.loginlogout_page import LoginLogutPage
+from tests.e2e.pages.space_and_beyond.loginlogout_page import LoginLogutPage
 
 load_dotenv()
 

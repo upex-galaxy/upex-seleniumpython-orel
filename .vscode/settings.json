@@ -12,5 +12,6 @@
     "terminal.integrated.env.linux": {
         "CONDA_DEFAULT_ENV": "picadita-selelium-python"
     },
+    "python.REPL.enableREPLSmartSend": false,
 
 }

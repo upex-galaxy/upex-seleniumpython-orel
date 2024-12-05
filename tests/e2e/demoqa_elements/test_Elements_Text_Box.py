@@ -1,5 +1,5 @@
 from tests.e2e.utils.imports import *
-from tests.e2e.pages.textbox_page import TextBoxPage
+from tests.e2e.pages.demoqa.textbox_page import TextBoxPage
 
 # Story GX3-5700
 class Test_Elements_Text_Box:
