@@ -4,7 +4,7 @@ from selenium.webdriver.remote.webelement import WebElement
 
 
 
-class Locator:
+class Locators:
     def __init__(self, driver: WebDriver):
         """
         Inicializa la instancia de Locator con un controlador web.
@@ -85,17 +85,18 @@ class Locator:
         Extrae toda la información visible de una tabla HTML.
 
         Args:
-            table_class (str): La clase CSS contenedora de las filas y columnas de la tabla.
+            parent_table (WebElement): Elemento padre que contiene la tabla HTML.
 
         Returns:
-            list: Una lista de listas que contiene los datos de la tabla que son visibles.
+            list[list[str]]: Una lista de listas que contiene los datos visibles de la tabla.
         """
+
 
         # Localizar la tabla mediante la clase
         table = parent_table.find_element(By.CSS_SELECTOR, "[role=grid]")
 
         # Obtener todas las filas dentro de la tabla
-        rows = table.find_elements(By.CSS_SELECTOR, "[role=rowgrup] [role=row]:not(.-padRow)")
+        rows = table.find_elements(By.CSS_SELECTOR, "[role=rowgroup] [role=row]:not(.-padRow)")
 
         table_data = []
         for row in rows:

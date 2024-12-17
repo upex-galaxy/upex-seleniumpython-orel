@@ -1,53 +1,63 @@
-from tests.e2e.utils.imports import *
+from selenium.webdriver.common.action_chains import ActionChains
+from tests.e2e.pages.demoqa.buttons_page import ButtonsPage
+from selenium.webdriver.common.by import By
+import pytest
+
 
 # Story GX3-5656
 class Test_Elements_Button:
-    
-    @pytest.fixture
-    def web(self):
-        """Precondition: Open the demo page and wait for primary button visibility"""
-        driver = Chrome()
-        driver.get('https://demoqa.com/buttons/')
-        WebDriverWait(driver, 20).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, ".btn.btn-primary"))
-        )
-    
-        yield driver
-        driver.quit()
-    
-    def test_should_display_message_by_left_click(self, web: WebDriver):
-        """TC01: Validate that the message 'You have done a dynamic click' is displayed correctly after clicking the 'Click Me' button"""
-        button = WebDriverWait(web, 10).until(
-            EC.visibility_of_element_located((By.XPATH, "//button[text()='Click Me']"))
-        )
+
+    def test_should_display_message_by_left_click(self, driver):
+        """TC01: Validate that the message 'You have done a dynamic click' is displayed correctly after clicking the 'Click Me' button"""     
+        buttons_page = ButtonsPage(driver)
+        buttons_page.open_buttons_page()
+        
+        buttons_page.helpers.wait_for_element(buttons_page.driver.find_element(By.ID, "doubleClickBtn"))
+        
+        button = buttons_page.locators.get_by_text("Click Me", True)
         button.click()
         
-        message = web.find_element(By.ID, "dynamicClickMessage")
-        assert message.text == "You have done a dynamic click"
-            
-    def test_right_click(self, web: WebDriver):
-        """TC02: Validate that the message 'You have done a right click' is displayed correctly after right-clicking the 'Right Click Me' button"""
-        button = WebDriverWait(web, 10).until(
-            EC.visibility_of_element_located((By.ID, "rightClickBtn"))
-        )
-        
-        actions = ActionChains(web)
-        actions.context_click(button).perform()
+        # Verificar el mensaje que aparece después del clic
+        message = buttons_page.driver.find_element(By.ID, "dynamicClickMessage")
+        assert message.text == "You have done a dynamic click", "Incorrect message displayed!"
 
-        message = web.find_element(By.ID, "rightClickMessage")
-        assert message.text == "You have done a right click"
+    def test_right_click(self, driver):
+        """TC02: Validate that the message 'You have done a right click' is displayed correctly after right-clicking the 'Right Click Me' button"""
+        buttons_page = ButtonsPage(driver)
+        buttons_page.open_buttons_page()
         
-    def test_double_click(self, web: WebDriver):
+        buttons_page.helpers.wait_for_element(buttons_page.driver.find_element(By.ID, "rightClickBtn"))
+        
+        # Localizar el botón para clic derecho
+        button = buttons_page.driver.find_element(By.ID, "rightClickBtn")
+        import time
+        time.sleep(1) 
+        buttons_page.web.execute_script("arguments[0].scrollIntoView(true);", button)
+        # Hacer clic derecho en el botón
+        actions = ActionChains(driver)
+        actions.context_click(button).perform()    
+
+        # Verificar el mensaje que aparece después del clic derecho
+        message = buttons_page.driver.find_element(By.ID, "rightClickMessage")
+        assert message.text == "You have done a right click", "Incorrect message displayed!"
+
+    def test_double_click(self, driver):
         """TC03: Validate that the message 'You have done a double click' is displayed correctly after double-clicking the 'Double Click Me' button"""
-        button = WebDriverWait(web, 10).until(
-            EC.visibility_of_element_located((By.ID, "doubleClickBtn"))
-        )
+        buttons_page = ButtonsPage(driver)
+        buttons_page.open_buttons_page()
         
-        actions = ActionChains(web)
+        buttons_page.helpers.wait_for_element(buttons_page.driver.find_element(By.ID, "doubleClickBtn"))
+
+        # Localizar el botón para doble clic
+        button = buttons_page.driver.find_element(By.ID, "doubleClickBtn")
+
+        # Hacer doble clic en el botón
+        actions = ActionChains(driver)
         actions.double_click(button).perform()
 
-        message = web.find_element(By.ID, "doubleClickMessage")
-        assert message.text == "You have done a double click"
-        
+        # Verificar el mensaje que aparece después del doble clic
+        message = buttons_page.driver.find_element(By.ID, "doubleClickMessage")
+        assert message.text == "You have done a double click", "Incorrect message displayed!"
+
 if __name__ == "__main__":
     pytest.main()

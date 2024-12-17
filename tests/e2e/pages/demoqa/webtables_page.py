@@ -1,10 +1,11 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
-from tests.e2e.pages.page import SuperPage
+from tests.e2e.pages.page import Page
 
-class WebTablesPage(SuperPage):
+class WebTablesPage(Page):
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
+        self.web = driver
         
         # STATIC lOCATORS
         # ----------------------------------------------------------------
@@ -32,12 +33,12 @@ class WebTablesPage(SuperPage):
             
         # Localizadores dinamicos para los encabezados de las columnas de la tabla
 
-        self.first_name_header = lambda: self.get_by_text('First Name')
-        self.last_name_header = lambda: self.get_by_text('Last Name')
-        self.age_header = lambda: self.get_by_text('Age')
-        self.email_header = lambda: self.get_by_text('Email')
-        self.salary_header = lambda: self.get_by_text('Salary')
-        self.department_header = lambda: self.get_by_text('Department')
+        self.first_name_header = lambda: self.locators.get_by_text('First Name')
+        self.last_name_header = lambda: self.locators.get_by_text('Last Name')
+        self.age_header = lambda: self.locators.get_by_text('Age')
+        self.email_header = lambda: self.locators.get_by_text('Email')
+        self.salary_header = lambda: self.locators.get_by_text('Salary')
+        self.department_header = lambda: self.locators.get_by_text('Department')
         
     # DYNAMIC lOCATORS
     # ----------------------------------------------------------------
@@ -58,9 +59,18 @@ class WebTablesPage(SuperPage):
     # ----------------------------------------------------------------
     # ----------------------------------------------------------------
     
+    def open_web_tables_page(self):
+        """Carga la página WebTables y espera que el botón de submit esté disponible."""
+        self.web.get('https://demoqa.com/webtables')
+        page_button = self.web.find_element(By.CSS_SELECTOR, ".btn-primary")
+        self.helpers.wait_for_element(page_button)
+        assert "webtables" in self.web.current_url, "La página actual no es la esperada ('webtables')."
+        
+
+
     def get_employee_tabledata(self)-> list[dict]:
         
-        table_data = self.get_table_data(self.employee_table())
+        table_data = self.locators.get_table_data(self.employee_table())
         employee_tabledata = []
         for row in table_data:
             employee_row_data = {}
@@ -72,18 +82,6 @@ class WebTablesPage(SuperPage):
             employee_row_data['Department'] = row[5]
             employee_tabledata.append(employee_row_data)
         return employee_tabledata
-
-
-    def wait_for_webtables_page(self):
-        """
-        Espera a que la página de 'webtables' esté cargada y encuentra el botón principal de la página.
-        Raises:
-            AssertionError: Si la URL actual no contiene 'webtables'.
-            NoSuchElementException: Si el botón principal no está presente en la página.
-        """
-        assert "webtables" in self.web.current_url, "La página actual no es la esperada ('webtables')."
-        page_button = self.web.find_element(By.CSS_SELECTOR, ".btn-primary")
-        self.wait_for_element(page_button)
     # ----------------------------------------------------------------
     
     # Proporciona un numero entero que representa el numero registros en la tabla
@@ -150,7 +148,7 @@ class WebTablesPage(SuperPage):
     # ----------------------------------------------------------------
     # Comprueba si dentro de las celdas de cualquiera de las filas visibles de la tabla, existe el valor que se introduce en el buscador
     def should_have_value_in_table(self, value):
-        elements = self.get_table_data('rt-table')
+        elements = self.locators.get_table_data(self.employee_table())
         assert any(value in sublist for sublist in elements)
 
     # ----------------------------------------------------------------
