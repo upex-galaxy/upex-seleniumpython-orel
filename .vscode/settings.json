@@ -1,16 +1,54 @@
 {
-    "editor.defaultFormatter": "ms-python.autopep8",
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true,
-    "python.testing.pytestArgs": [
-        "tests"
-    ],
-
-
-    "python.defaultInterpreterPath": "/miniconda3/envs/picadita-selelium-python/python.exe",
-    "python.terminal.activateEnvironment": true,
-    "terminal.integrated.env.linux": {
-        "CONDA_DEFAULT_ENV": "picadita-selelium-python"
-    },
-
+  "files.associations": {
+    "*.yml": "yaml",
+    "*.json": "jsonc"
+  },
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+  "black-formatter.args": [
+    "--line-length=200",
+    "--skip-string-normalization"
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.pylance": "explicit"
+  },
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "keep",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter",
+    "editor.formatOnSave": true
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter",
+    "editor.formatOnSave": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.formatOnSave": true
+  },
+  "python.defaultInterpreterPath": "/miniconda3/envs/picadita-selelium-python/python.exe",
+  "python.terminal.activateEnvironment": true,
+  "terminal.integrated.env.linux": {
+    "CONDA_DEFAULT_ENV": "picadita-selelium-python"
+  },
+  "python.REPL.enableREPLSmartSend": false,
+  "python.languageServer": "Pylance",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.enablePytestSupport": false,
+  "python.analysis.inlayHints.pytestParameters": true,
+  "python.testing.autoTestDiscoverOnSaveEnabled": false,
+  "python.analysis.typeCheckingMode": "standard"
 }

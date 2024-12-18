@@ -1,10 +1,11 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
-from tests.e2e.pages.page import SuperPage
+from tests.e2e.pages.page import Page
 
-class TextBoxPage(SuperPage):
+class TextBoxPage(Page):
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
+        self.web = driver
         
         # Usamos lambda para retrasar la búsqueda de los elementos hasta que realmente se necesiten.
         self.user_name_input = lambda: self.web.find_element(By.CSS_SELECTOR, "input#userName")
@@ -13,10 +14,12 @@ class TextBoxPage(SuperPage):
         self.permanent_address_input = lambda: self.web.find_element(By.CSS_SELECTOR, "textarea#permanentAddress")
         self.submit_button = lambda: self.web.find_element(By.CSS_SELECTOR, "button#submit")
         
-    def wait_for_displaying(self):
-        assert "text-box" in self.web.current_url
-        page_button = self.web.find_element(By.CSS_SELECTOR, ".btn-primary")
-        self.wait_for_element(page_button)
+        
+    def open_text_box_page(self):
+        """Carga la página Text Box y espera que el botón de submit esté disponible."""
+        self.web.get('https://demoqa.com/text-box')
+        self.helpers.wait_for_element(self.submit_button())
+        assert "text-box" in self.web.current_url, "La URL cargada no es la esperada."
         
     def enter_user_name(self, value: str):
         self.user_name_input().send_keys(value)

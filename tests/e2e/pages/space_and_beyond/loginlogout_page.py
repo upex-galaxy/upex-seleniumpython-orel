@@ -1,10 +1,11 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
-from tests.e2e.pages.page import SuperPage
+from tests.e2e.pages.page import Page
 
-class LoginLogutPage(SuperPage):
+class LoginLogutPage(Page):
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
+        self.web = driver
         
         # localizamos los inputs
         self.user_name_input = lambda: self.web.find_element(By.CSS_SELECTOR, "input[tabindex='1']")
@@ -18,14 +19,11 @@ class LoginLogutPage(SuperPage):
         self.dropdown_open_logout = lambda: self.web.find_element(By.CSS_SELECTOR, ".mui--is-open")
         
 
-    
-    
-    
-    
-    def wait_for_displaying(self): # Esperamos que el boton login sea visible para avanzar
-        assert "login" in self.web.current_url
-        page_button = self.web.find_element(By.CSS_SELECTOR, "button[form='login']")
-        self.wait_for_element(page_button)
+    def open_space_and_beyond_page(self):
+        """Carga la página y espera que el botón de submit esté disponible."""
+        self.web.get('https://demo.testim.io/login')
+        self.helpers.wait_for_element(self.submit_button())
+        assert "login" in self.web.current_url, "La URL cargada no es la esperada."
     
     def enter_user_name(self, value: str): # Introducimos el usuario
         self.user_name_input().send_keys(value)
@@ -43,5 +41,5 @@ class LoginLogutPage(SuperPage):
     def log_out(self): # Hacemos click en el dropdown button de login y luego hacemos click en el boton logout
         self.login_menu().click()
         log_out = self.dropdown_open_logout()
-        self.wait_for_element(log_out)
+        self.helpers.wait_for_element(log_out)
         log_out.click()
