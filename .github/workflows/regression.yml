@@ -1,0 +1,31 @@
+name: Pruebas de regresion (Pipeline)
+run-name: ${{github.actor}} Ejecuto regresion en envailment ${{github.ref_name}}
+
+on:
+  push:
+    branches:
+    - test/*
+
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  regression:
+    env:
+      USERNAME: ${{secrets.USERNAME}}
+      PASSWORD: ${{secrets.PASSWORD}}
+    environment:
+      name: "QA"
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Clonar proyecto"
+      uses: actions/checkout@v4
+
+    - name: "Instalar dependencias"
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: "Ejecutar las pruebas"
+      run: pytest -v --headless=true
