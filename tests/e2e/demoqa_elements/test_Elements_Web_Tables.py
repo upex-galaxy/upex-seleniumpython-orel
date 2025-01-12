@@ -1,5 +1,6 @@
 from http.client import UPGRADE_REQUIRED
 from tests.e2e.pages.demoqa.webtables_page import WebTablesPage
+import pytest
 
 
 # Story GX3-5779
@@ -96,3 +97,7 @@ class Test_Elements_Web_Tables:
         web_tables_page.set_visible_row_count("10")
         visible_register_list = web_tables_page.get_employee_tabledata()
         assert len(visible_register_list) == 10
+
+
+if __name__ == "__main__":
+    pytest.main()
