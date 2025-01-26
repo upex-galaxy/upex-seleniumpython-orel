@@ -1,5 +1,6 @@
 # tests/e2e/utils/assertions.py
 
+
 class Assertions:
     def __init__(self, driver):
         self.driver = driver

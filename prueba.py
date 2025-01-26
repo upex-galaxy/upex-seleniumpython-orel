@@ -46,5 +46,3 @@ class MyExampleClass:
         Método estático: no accede a atributos ni de clase ni de instancia.
         """
         print("Este es un método estático, útil para utilidades o cálculos independientes.")
-
-
