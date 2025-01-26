@@ -1,5 +1,6 @@
 # tests/e2e/utils/actions.py
 
+
 class Actions:
     def __init__(self, driver):
         self.driver = driver
